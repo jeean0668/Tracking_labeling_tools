@@ -48,6 +48,12 @@ RUN echo "root:root" | chpasswd \
     && echo "${USERNAME}:${USERNAME}" | chpasswd \
     && echo "%${USERNAME}    ALL=(ALL)   NOPASSWD:    ALL" >> /etc/sudoers.d/${USERNAME} \
     && chmod 0440 /etc/sudoers.d/${USERNAME}
+
+RUN apt-get install -y sudo \
+    && apt-get install -y python-tk \
+    && sudo wget -qO /usr/local/bin/yt-dlp https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp \
+    && sudo chmod a+rx /usr/local/bin/yt-dlp
+    
 USER ${USERNAME}
 RUN sudo chown -R ${USERNAME}:${USERNAME} ${WORKDIR}
 WORKDIR ${WORKDIR}
